@@ -13,13 +13,13 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.ConfigItem.belongsTo(models.Config, {
         foreignKey: {
-          name: 'id_config',
+          name: 'configId',
           allowNull: false
         }
       });
       models.ConfigItem.belongsTo(models.Item, {
         foreignKey: {
-          name: 'id_item',
+          name: 'itemId',
           allowNull: false
         }
       });

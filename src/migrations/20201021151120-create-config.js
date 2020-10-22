@@ -20,7 +20,7 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW
       },
-      id_user: {
+      userId: {
         required: true,
         allowNull: false,
         type: Sequelize.INTEGER,

@@ -8,26 +8,24 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      Name: {
-        unique: true,
-        required: true,
-        allowNull: false,
+      name: {
+        unique:true,
+        allowNull:false,
         type: Sequelize.STRING
       },
       url: {
-        unique: true,
-        required: true,
-        allowNull: false,
+        unique:true,
+        allowNull:false,
         type: Sequelize.STRING
       },
-      id_provider: {
-        required: true,
-        allowNull: false,
+      ProviderId: {
+        allowNull:false,
         type: Sequelize.INTEGER,
         references: {
           model: 'providers',
           key: 'id',
         }
+
       },
       createdAt: {
         allowNull: false,
