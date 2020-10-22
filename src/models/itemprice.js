@@ -13,14 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.ItemPrice.belongsTo(models.Item, {
         foreignKey: {
-          name: 'id_product',
+          name: 'id_item',
           allowNull: false
         }
       });
     }
   };
   ItemPrice.init({
-    id_product: DataTypes.INTEGER,
+    id_item: DataTypes.INTEGER,
     price: DataTypes.STRING,
     date: DataTypes.DATE
   }, {
