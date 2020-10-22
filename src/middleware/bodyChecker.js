@@ -35,7 +35,9 @@ let check = (model, field) => {
 }
 
 let userBodyChecker = check('user', ['username', 'password', 'email'])
+let itemBodyChecker = check('item', ['url']);
 
 module.exports = {
-  userBodyChecker
+  userBodyChecker,
+  itemBodyChecker
 };
