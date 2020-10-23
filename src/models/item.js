@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.Item.belongsTo(models.Provider,{
         foreignKey:{
-          name: 'ProviderId',
+          name: 'providerId',
           allowNull: false,
         }
       });
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   Item.init({
     name: DataTypes.STRING,
     url: DataTypes.STRING,
-    ProviderId: DataTypes.INTEGER
+    providerId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Item',

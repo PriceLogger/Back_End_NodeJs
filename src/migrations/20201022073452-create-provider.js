@@ -9,12 +9,19 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        unique: true,
+        required: true,
+        allowNull: false,
         type: Sequelize.STRING
       },
       priceTag: {
+        required: true,
+        allowNull: false,
         type: Sequelize.STRING
       },
       nameTag: {
+        required: true,
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {
