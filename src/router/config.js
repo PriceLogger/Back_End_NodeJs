@@ -4,13 +4,13 @@ const {configChecker} = require('../middleware/bodyChecker');
 const {auth, role} = require('../middleware/auth');
 const config = new Controller();
 
-router.get('/', config.get);
+router.get('/', auth, config.get);
 
-router.get('/:id/item', config.getItemByConfig)
+router.get('/:id/item', auth, config.getItemByConfig)
 
 router.get('/:id', auth, config.getById);
 
-router.post('/',  configChecker, config.create);
+router.post('/', auth, configChecker, config.create);
 
 router.patch('/:id', auth, config.updateById);
 

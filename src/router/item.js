@@ -4,11 +4,11 @@ const {itemBodyChecker} = require('../middleware/bodyChecker');
 const {auth, role} = require('../middleware/auth');
 const item = new ItemController();
 
-router.get('/', item.get);
+router.get('/', auth, item.get);
 
-router.get('/:id', item.getById);
+router.get('/:id', auth, item.getById);
 
-router.post('/', itemBodyChecker, item.create);
+router.post('/', itemBodyChecker, auth, item.create);
 
 router.patch('/:id', auth, role('admin'), item.updateById);
 
