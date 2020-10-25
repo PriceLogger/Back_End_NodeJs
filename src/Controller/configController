@@ -8,11 +8,11 @@ class ConfigController extends Controller {
   }
 
   getItemByConfig = (req, res, next) => {
-    this.models['Config'].findAll({
+    this.model.findAll({
       where: {
         id: req.params.id
       },
-      include: this.models.ConfigItem
+      include: this.models.Item
     }).then(config => {
       res.json(config);
     }).catch(err => {

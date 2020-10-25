@@ -11,18 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.ConfigItem.belongsTo(models.Config, {
-        foreignKey: {
-          name: 'configId',
-          allowNull: false
-        }
-      });
-      models.ConfigItem.belongsTo(models.Item, {
-        foreignKey: {
-          name: 'itemId',
-          allowNull: false
-        }
-      });
     }
   };
   ConfigItem.init({
