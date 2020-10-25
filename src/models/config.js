@@ -22,7 +22,6 @@ module.exports = (sequelize, DataTypes) => {
   };
   Config.init({
     name: DataTypes.STRING,
-    date: DataTypes.DATE,
     userId: DataTypes.INTEGER,
     description: DataTypes.STRING
   }, {
