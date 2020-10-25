@@ -1,10 +1,12 @@
 const router = require('express').Router();
 const ItemController = require('../controller/itemController');
-const { itemBodyChecker } = require('../middleware/bodyChecker');
-const { auth, role } = require('../middleware/auth');
+const {itemBodyChecker} = require('../middleware/bodyChecker');
+const {auth, role} = require('../middleware/auth');
 const item = new ItemController();
 
 router.get('/', item.get);
+
+router.get('/:id', item.getById);
 
 router.post('/', itemBodyChecker, item.create);
 
