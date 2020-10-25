@@ -13,7 +13,9 @@ module.exports = {
         references: {
           model: 'configs',
           key: 'id',
-        }
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       itemId: {
         type: Sequelize.INTEGER,

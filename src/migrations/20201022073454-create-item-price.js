@@ -15,7 +15,9 @@ module.exports = {
         references: {
             model: 'items',
             key: 'id',
-        }
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       price: {
         required: true,

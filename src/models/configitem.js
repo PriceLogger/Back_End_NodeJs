@@ -26,8 +26,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   ConfigItem.init({
-    id_configs: DataTypes.INTEGER,
-    id_item: DataTypes.INTEGER,
+    configId: DataTypes.INTEGER,
+    itemId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'ConfigItem',
