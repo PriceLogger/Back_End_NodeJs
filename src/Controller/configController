@@ -1,0 +1,24 @@
+const Controller = require('./controller');
+const {getInfo, extractUrl} = require('../method/item');
+
+class ConfigController extends Controller {
+
+  constructor() {
+    super('Config');
+  }
+
+  getItemByConfig = (req, res, next) => {
+    this.models['Config'].findAll({
+      where: {
+        id: req.params.id
+      },
+      include: this.models.ConfigItem
+    }).then(config => {
+      res.json(config);
+    }).catch(err => {
+        this.err(err, res)
+      })
+  }
+}
+
+module.exports = ConfigController;
