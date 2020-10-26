@@ -38,7 +38,7 @@ const extractInformation = (data, tag) => {
   }
 
   let name = get(tag.nameTag)
-  let price = get(tag.priceTag).replace(/([^\d.,])/gi, "");
+  let price = get(tag.priceTag).replace(/([^\d.,])/gi, ""); //keep only number , comma and dot
 
   return {name: name, price: price};
 }

@@ -1,7 +1,8 @@
 {
   "name": "price-logger-back-end",
   "version": "1.0.0",
-  "description": "",
+  "private": true,
+  "description": "A price logger",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

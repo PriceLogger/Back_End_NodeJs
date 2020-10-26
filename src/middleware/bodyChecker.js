@@ -37,7 +37,7 @@ let check = (model, field) => {
 let userBodyChecker = check('user', ['username', 'password', 'email'])
 let itemBodyChecker = check('item', ['url']);
 let providerBodyChecker = check('provider', ['name', 'priceTag', 'nameTag'])
-let configChecker = check('config', ['name','userId', 'description'])
+let configChecker = check('config', ['name', 'description'])
 let loginBody = check('user', ['username', 'password'])
 
 module.exports = {

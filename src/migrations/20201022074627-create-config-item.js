@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      configId: {
+      ConfigId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'configs',
@@ -17,7 +17,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      itemId: {
+      ItemId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'items',
