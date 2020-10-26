@@ -10,7 +10,7 @@ class ItemController extends Controller {
   create = (req, res, next) => {
     let url = req.body.item.url;
     let provider = extractUrl(url).hostname;
-    this.models['Provider']
+    this.models.Provider
       .findOne({where: {name: provider}}) // Retrieve html tag from DB
       .then(tag => {
         if (!tag) throw new httpException("No Provider founded for this url", 404);
@@ -29,20 +29,19 @@ class ItemController extends Controller {
                     res.json(item);
                   })
                   .catch(err => {
-                    this.err(err ,res);
+                    this.err(err, res);
                   });
               }
             )
             .catch(err => {
-              this.err(err ,res);
+              this.err(err, res);
             });
         })
       })
       .catch(err => {
-        this.err(err ,res);
+        this.err(err, res);
       });
   }
-
 
 
 }

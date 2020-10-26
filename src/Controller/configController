@@ -1,5 +1,7 @@
 const Controller = require('./controller');
+const httpException = require('../exception/httpException');
 const {getInfo, extractUrl} = require('../method/item');
+const jwt = require('jsonwebtoken')
 
 class ConfigController extends Controller {
 
@@ -16,8 +18,39 @@ class ConfigController extends Controller {
     }).then(config => {
       res.json(config);
     }).catch(err => {
-        this.err(err, res)
+      this.err(err, res)
+    })
+  }
+
+  createNewConfig = (req, res, next) => {
+    let decoded = jwt.decode(req.headers['authorization']);
+    console.log(decoded)
+    req.body.config.userId = decoded.id;
+    this.create(req, res, next);
+  }
+
+  addItem = (req, res, next) => {
+    let configItem = {
+      ConfigId: req.params.configId,
+      ItemId: req.params.itemId
+    }
+
+    this.models.ConfigItem
+      .findOne({
+        where: {
+          ...configItem
+        }
       })
+      .then(data => {
+        if (data) throw new httpException("Duplicate item in config", 422);
+        this.models.ConfigItem
+          .create(configItem)
+          .then(configItem => {
+            res.json(configItem);
+          })
+          .catch(err => res.status(400).json(err))
+      })
+      .catch(err => res.status(400).json(err))
   }
 }
 
