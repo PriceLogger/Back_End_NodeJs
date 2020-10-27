@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       models.Item.belongsToMany(models.Config, {through: models.ConfigItem})
       models.Item.belongsTo(models.Provider,{
         foreignKey:{
-          name: 'providerId',
+          name: 'ProviderId',
           allowNull: false,
         }
       });
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
   Item.init({
     name: DataTypes.STRING,
     url: DataTypes.STRING,
-    providerId: DataTypes.INTEGER
+    ProviderId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Item',

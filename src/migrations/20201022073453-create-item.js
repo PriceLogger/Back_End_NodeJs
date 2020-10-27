@@ -18,7 +18,7 @@ module.exports = {
         allowNull:false,
         type: Sequelize.STRING
       },
-      providerId: {
+      ProviderId: {
         allowNull:false,
         type: Sequelize.INTEGER,
         references: {

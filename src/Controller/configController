@@ -14,7 +14,7 @@ class ConfigController extends Controller {
       where: {
         id: req.params.id
       },
-      include: this.models.Item
+      include: [this.models.Item, this.models.User]
     }).then(config => {
       res.json(config);
     }).catch(err => {
