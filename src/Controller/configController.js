@@ -21,20 +21,20 @@ class ConfigController extends Controller {
   }
 
   createNewConfig = (req, res, next) => {
-    let decoded = jwt.decode(req.headers['authorization']);
-    req.body.UserId = decoded.id;
+    let id = jwt.decode(req.headers['authorization']).id;
+    req.body.UserId = id;
     this.create(req, res, next);
   }
 
   addItem = (req, res, next) => {
-    let decoded = jwt.decode(req.headers['authorization']);
+    let id = jwt.decode(req.headers['authorization']).id;
     let configItem = {
       ConfigId: req.params.configId,
       ItemId: req.params.itemId
     }
     let config = {
       id: req.params.configId,
-      UserId: decoded.id,
+      UserId: id.id,
     }
 
     //check if config exist
@@ -59,6 +59,13 @@ class ConfigController extends Controller {
       .catch(this.err(res))
   }
 
+  update = (req, res, next) => {
+    let id = jwt.decode(req.headers['authorization']).id
+    this.model.findOne({where: {id: req.params.id, UserId: id}})
+      .then(data => {
+        if (data) this.updateById()
+      })
+  }
 
 }
 

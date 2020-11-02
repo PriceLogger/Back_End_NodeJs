@@ -13,14 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.ItemPrice.belongsTo(models.Item, {
         foreignKey: {
-          name: 'itemId',
+          name: 'ItemId',
           allowNull: false
         }
       });
     }
   };
   ItemPrice.init({
-    itemId: DataTypes.INTEGER,
+    ItemId: DataTypes.INTEGER,
     price: DataTypes.STRING,
   }, {
     sequelize,

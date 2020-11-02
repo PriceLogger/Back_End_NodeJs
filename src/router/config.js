@@ -12,7 +12,7 @@ router.post('/', auth, configChecker, config.createNewConfig);
 
 router.post('/:configId/add/:itemId', auth, config.addItem);
 
-router.patch('/:id', auth, config.updateById);
+router.patch('/:id', auth, config.update);
 
 router.delete('/:id', auth, config.deleteById);
 

@@ -1,6 +1,6 @@
 const http = require('https');
 
-const getInfo = (url, tag, response) => {
+const getInfo = (url, tag) => {
   url = extractUrl(url);
   const hostname = url.hostname;
   const path = url.path;
@@ -10,16 +10,20 @@ const getInfo = (url, tag, response) => {
     port: 443,
     path: path
   };
-  http.get(options, (res) => {
-    res.setEncoding("utf8");
-    let body;
-    res.on("data", (chunk) => {
-      body += chunk;
-    })
-    res.on("end", () => {
-      response(extractInformation(body, tag));
-    })
-  });
+
+  return new Promise((resolve) => {
+    http.get(options, (res) => {
+      res.setEncoding("utf8");
+      let body;
+      res.on("data", (chunk) => {
+        body += chunk;
+      })
+      res.on("end", () => {
+        resolve(extractInformation(body, tag));
+      })
+    });
+  })
+
 }
 
 const extractInformation = (data, tag) => {
