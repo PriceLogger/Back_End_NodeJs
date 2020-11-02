@@ -1,5 +1,5 @@
 const Controller = require('./controller');
-const {getInfo, extractUrl} = require('../method/item');
+const {fetchItem, extractUrl} = require('../method/item');
 const httpException = require('../exception/httpException');
 
 class ItemController extends Controller {
@@ -24,7 +24,7 @@ class ItemController extends Controller {
         if (!tag) throw new httpException("No Provider founded for this url", 404);
 
         // Fetch name and price from web page
-        let itemInfo = await getInfo(url, tag.dataValues)
+        let itemInfo = await fetchItem(url, tag.dataValues)
 
         // Create a new item
         item = await this.model.create({name: itemInfo.name, ProviderId: tag.dataValues.id, url: url})

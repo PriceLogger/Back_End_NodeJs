@@ -1,14 +1,12 @@
 const http = require('https');
 
-const getInfo = (url, tag) => {
+const fetchItem = (url, tag) => {
   url = extractUrl(url);
-  const hostname = url.hostname;
-  const path = url.path;
 
   const options = {
-    host: hostname,
+    host: url.hostname,
     port: 443,
-    path: path
+    path: url.path
   };
 
   return new Promise((resolve) => {
@@ -19,22 +17,21 @@ const getInfo = (url, tag) => {
         body += chunk;
       })
       res.on("end", () => {
-        resolve(extractInformation(body, tag));
+        resolve({...extractInformation(body, tag), provider: url.hostname});
       })
     });
   })
-
 }
 
 const extractInformation = (data, tag) => {
   let get = (tag) => {
     let start = data.indexOf(tag) + tag.length;
-    while (start < data.length && data.charAt(start) != '>') {
+    while (start < data.length && data.charAt(start) !== '>') {
       start++;
     }
 
     let end = start + 1;
-    while (end < data.length && data.charAt(end) != '<') {
+    while (end < data.length && data.charAt(end) !== '<') {
       end++;
     }
 
@@ -66,4 +63,4 @@ const extractUrl = (url) => {
   return {hostname: hostname, path: path};
 }
 
-module.exports = {getInfo, extractUrl}
+module.exports = {fetchItem, extractUrl}
