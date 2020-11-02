@@ -17,41 +17,49 @@ class ConfigController extends Controller {
       include: [this.models.Item, this.models.User]
     }).then(config => {
       res.json(config);
-    }).catch(err => {
-      this.err(err, res)
-    })
+    }).catch(this.err(res))
   }
 
   createNewConfig = (req, res, next) => {
     let decoded = jwt.decode(req.headers['authorization']);
-    console.log(decoded)
-    req.body.config.userId = decoded.id;
+    req.body.UserId = decoded.id;
     this.create(req, res, next);
   }
 
   addItem = (req, res, next) => {
+    let decoded = jwt.decode(req.headers['authorization']);
     let configItem = {
       ConfigId: req.params.configId,
       ItemId: req.params.itemId
     }
+    let config = {
+      id: req.params.configId,
+      UserId: decoded.id,
+    }
 
-    this.models.ConfigItem
-      .findOne({
-        where: {
-          ...configItem
-        }
+    //check if config exist
+    let configExist = this.model.findOne({where: config})
+      .then(config => {
+        if (!config) throw new httpException("You don't own this config", 401)
       })
+
+    //check for duplicate item
+    let duplicateItem = this.models.ConfigItem.findOne({where: configItem})
       .then(data => {
         if (data) throw new httpException("Duplicate item in config", 422);
-        this.models.ConfigItem
-          .create(configItem)
-          .then(configItem => {
-            res.json(configItem);
-          })
-          .catch(err => res.status(400).json(err))
       })
-      .catch(err => res.status(400).json(err))
+
+    //add item to config
+    Promise.all([configExist, duplicateItem])
+      .then(data => {
+        this.models.ConfigItem.create(configItem)
+          .then(data => res.json(data))
+          .catch(this.err(res))
+      })
+      .catch(this.err(res))
   }
+
+
 }
 
 module.exports = ConfigController;

@@ -23,10 +23,10 @@ class AuthController extends Controller {
   login = (req, res, next) => {
     this.model.findOne({
       where: {
-        username: req.body.user.username
+        username: req.body.username
       }
     }).then(user => {
-      if (user && bcrypt.compareSync(req.body.user.password, user.password)) {
+      if (user && bcrypt.compareSync(req.body.password, user.password)) {
         let token = this.sign(user);
         res.status(200).json({
           code: 200,

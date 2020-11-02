@@ -10,7 +10,7 @@ router.get('/:id', auth, config.getItemByConfig);
 
 router.post('/', auth, configChecker, config.createNewConfig);
 
-router.post('/:configId/item/:itemId', auth, config.addItem);
+router.post('/:configId/add/:itemId', auth, config.addItem);
 
 router.patch('/:id', auth, config.updateById);
 

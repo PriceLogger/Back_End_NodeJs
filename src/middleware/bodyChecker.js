@@ -1,24 +1,13 @@
-let check = (model, field) => {
+let check = (field) => {
   return (req, res, next) => {
-    model = model.toLowerCase();
     let correct = true;
-    let missing = {};
-    let comp = 0;
-    if (req.body == "undefined" || !req.body || (req.body && !req.body[model])) {
-      missing.object = model;
-      missing.value = {...field};
-      correct = false;
-    } else {
-      let body = req.body[model];
-      field.forEach(key => {
-        if (!body.hasOwnProperty(key)) {
-          missing.value = missing.value == null ? {} : missing.value;
-          missing.value[comp] = key;
-          correct = false;
-          comp++;
-        }
-      });
-    }
+    let missing = [];
+    field.forEach(key => {
+      if (!req.body.hasOwnProperty(key)) {
+        missing.push(key);
+        correct = false;
+      }
+    });
 
     if (correct) {
       next();
@@ -27,18 +16,18 @@ let check = (model, field) => {
         err: {
           code: 400,
           message: 'Some required fields are not filled in',
-          missing
+          missing: missing
         }
       });
     }
   }
 }
 
-let userBodyChecker = check('user', ['username', 'password', 'email'])
-let itemBodyChecker = check('item', ['url']);
-let providerBodyChecker = check('provider', ['name', 'priceTag', 'nameTag'])
-let configChecker = check('config', ['name', 'description'])
-let loginBody = check('user', ['username', 'password'])
+let userBodyChecker = check(['username', 'password', 'email'])
+let itemBodyChecker = check(['url']);
+let providerBodyChecker = check(['name', 'priceTag', 'nameTag'])
+let configChecker = check(['name', 'description'])
+let loginBody = check(['username', 'password'])
 
 module.exports = {
   userBodyChecker,

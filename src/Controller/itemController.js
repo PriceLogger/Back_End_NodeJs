@@ -8,7 +8,7 @@ class ItemController extends Controller {
   }
 
   create = (req, res, next) => {
-    let url = req.body.item.url;
+    let url = req.body.url;
     let provider = extractUrl(url).hostname;
     this.models.Provider
       .findOne({where: {name: provider}}) // Retrieve html tag from DB
@@ -28,22 +28,14 @@ class ItemController extends Controller {
                     item.itemPrice = itemPriceRes.toJSON();
                     res.json(item);
                   })
-                  .catch(err => {
-                    this.err(err, res);
-                  });
+                  .catch(this.err(res));
               }
             )
-            .catch(err => {
-              this.err(err, res);
-            });
+            .catch(this.err(res));
         })
       })
-      .catch(err => {
-        this.err(err, res);
-      });
+      .catch(this.err(res));
   }
-
-
 }
 
 module.exports = ItemController;
