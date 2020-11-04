@@ -8,7 +8,7 @@ class Controller {
     this.model = this.models[table];
   }
 
-  get = (req, res, next) => {
+  get = (req, res) => {
     this.model.findAll()
       .then(data => {
         res.status(200).json(data);
@@ -16,7 +16,7 @@ class Controller {
       .catch(this.err(res))
   }
 
-  getById = (req, res, next) => {
+  getById = (req, res) => {
     this.model.findOne({where: {id: req.params.id}})
       .then(data => {
         if (!data) throw new httpException(this.model.name + ' not foud', 404)
@@ -25,7 +25,7 @@ class Controller {
       .catch(this.err(res))
   }
 
-  create = (req, res, next) => {
+  create = (req, res) => {
     this.model.create(req.body)
       .then(data => {
         res.status(200).json(data);
@@ -33,7 +33,7 @@ class Controller {
       .catch(this.err(res))
   }
 
-  updateById = (req, res, next) => {
+  updateById = (req, res) => {
     this.model.update(req.body, {
       where: {
         id: req.params.id,
@@ -45,7 +45,7 @@ class Controller {
       .catch(this.err(res))
   }
 
-  deleteById = (req, res, next) => {
+  deleteById = (req, res) => {
     this.model.destroy({
       where: {
         id: req.params.id,

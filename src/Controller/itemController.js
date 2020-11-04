@@ -8,7 +8,15 @@ class ItemController extends Controller {
     super('Item');
   }
 
-  create = async (req, res, next) => {
+  getById = async (req,res) => {
+    let items = await this.model.findOne({
+      where: {id : req.params.id},
+      include: this.models.ItemPrice
+    });
+    res.json(items);
+}
+
+  create = async (req, res) => {
     let url = req.body.url;
     let provider = extractUrl(url).hostname;
     let tag;

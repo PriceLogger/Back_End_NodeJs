@@ -4,6 +4,9 @@
   "private": true,
   "description": "A price logger",
   "main": "app.js",
+  "engines": {
+    "node": "12.11.1"
+  },
   "scripts": {
     "test": "./node_modules/.bin/nodemon ./src/app.js",
     "start": "node ./src/app.js"

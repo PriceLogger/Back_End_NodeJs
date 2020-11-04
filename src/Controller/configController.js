@@ -1,6 +1,5 @@
 const Controller = require('./controller');
 const httpException = require('../exception/httpException');
-const {getInfo, extractUrl} = require('../method/item');
 const jwt = require('jsonwebtoken')
 
 class ConfigController extends Controller {
@@ -9,7 +8,7 @@ class ConfigController extends Controller {
     super('Config');
   }
 
-  getItemByConfig = (req, res, next) => {
+  getItemByConfig = (req, res) => {
     this.model.findAll({
       where: {
         id: req.params.id
@@ -21,12 +20,11 @@ class ConfigController extends Controller {
   }
 
   createNewConfig = (req, res, next) => {
-    let id = jwt.decode(req.headers['authorization']).id;
-    req.body.UserId = id;
-    this.create(req, res, next);
+    req.body.UserId = jwt.decode(req.headers['authorization']).id;
+    this.create(req, res);
   }
 
-  addItem = (req, res, next) => {
+  addItem = (req, res) => {
     let id = jwt.decode(req.headers['authorization']).id;
     let configItem = {
       ConfigId: req.params.configId,
@@ -51,7 +49,7 @@ class ConfigController extends Controller {
 
     //add item to config
     Promise.all([configExist, duplicateItem])
-      .then(data => {
+      .then(() => {
         this.models.ConfigItem.create(configItem)
           .then(data => res.json(data))
           .catch(this.err(res))
@@ -59,11 +57,11 @@ class ConfigController extends Controller {
       .catch(this.err(res))
   }
 
-  update = (req, res, next) => {
+  update = (req, res) => {
     let id = jwt.decode(req.headers['authorization']).id
     this.model.findOne({where: {id: req.params.id, UserId: id}})
       .then(data => {
-        if (data) this.updateById()
+        if (data) this.updateById(req, res)
       })
   }
 

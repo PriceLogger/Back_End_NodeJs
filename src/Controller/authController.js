@@ -20,7 +20,7 @@ class AuthController extends Controller {
       });
   }
 
-  login = (req, res, next) => {
+  login = (req, res) => {
     this.model.findOne({
       where: {
         username: req.body.username
