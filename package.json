@@ -5,8 +5,8 @@
   "description": "A price logger",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./node_modules/.bin/nodemon ./src/app.js"
+    "test": "./node_modules/.bin/nodemon ./src/app.js",
+    "start": "node ./src/app.js"
   },
   "author": "",
   "license": "ISC",
