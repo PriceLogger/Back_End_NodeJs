@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const UserController = require('../controller/UserController');
-const {userBodyChecker} = require('../middleware/bodyChecker');
-const {auth, role} = require('../middleware/auth');
+const UserController = require('../controller/userController');
+const { userBodyChecker } = require('../middleware/bodyChecker');
+const { auth, role } = require('../middleware/auth');
 const user = new UserController();
 
 router.get('/', role('admin'), user.get);

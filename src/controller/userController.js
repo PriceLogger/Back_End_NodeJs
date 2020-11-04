@@ -1,5 +1,4 @@
-const jwt =  require('jsonwebtoken');
-
+const jwt = require('jsonwebtoken');
 const Controller = require('./controller');
 const bcrypt = require('bcrypt');
 

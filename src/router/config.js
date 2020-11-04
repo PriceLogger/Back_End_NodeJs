@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const Controller = require('../controller/ConfigController');
-const {configChecker} = require('../middleware/bodyChecker');
-const {auth, role} = require('../middleware/auth');
+const Controller = require('../controller/configController');
+const { configChecker } = require('../middleware/bodyChecker');
+const { auth, role } = require('../middleware/auth');
 const config = new Controller();
 
 router.get('/', auth, config.get);
