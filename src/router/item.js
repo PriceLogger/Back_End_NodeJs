@@ -1,17 +1,27 @@
 const router = require('express').Router();
-const ItemController = require('../controller/itemController');
-const {itemBodyChecker} = require('../middleware/bodyChecker');
-const {auth, role} = require('../middleware/auth');
-const item = new ItemController();
+const Item = require('../models/').Item;
+const {check} = require('../middleware/validator');
+const {role} = require('../middleware/auth');
 
-router.get('/', auth, item.get);
+router.get('/', async ({res}) => {
+  res.json(await Item.findAll());
+});
 
-router.get('/:id', auth, item.getById);
+router.get('/:id(\\d+)/', async (req, res) => {
+  res.json(Item.findByPk(req.params.id));
+});
 
-router.post('/', itemBodyChecker, auth, item.create);
+router.post('/', check(['url']), async (req, res, next) => {
+  try {
+    let item = await Item.new(req.body.url);
+    res.json(item)
+  } catch (err) {
+    next(err);
+  }
+});
 
-router.patch('/:id', auth, role('admin'), item.updateById);
+/*router.patch('/:id', role('admin'), item.updateById);
 
-router.delete('/:id', auth, role('admin'), item.deleteById);
+router.delete('/:id', role('admin'), item.deleteById);*/
 
 module.exports = router;

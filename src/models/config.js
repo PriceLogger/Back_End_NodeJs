@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+const {Model} = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Config extends Model {
     /**
@@ -28,5 +26,29 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Config',
   });
+
+  Config.findAllUserAndItem = async function () {
+    let User = require('../models').User;
+    let Item = require('../models').Item;
+    return await Config.findAll({
+      include: [
+        {model: Item, attributes: ['name', 'url']},
+        {model: User, attributes: ['username']}
+      ]
+    })
+  }
+
+  Config.findAllUserAndItemById = async function (id) {
+    let User = require('../models').User;
+    let Item = require('../models').Item;
+    return await Config.findByPk(id, {
+      include: [
+        {model: Item, attributes: ['name', 'url']},
+        {model: User, attributes: ['username']}
+      ]
+    })
+
+  }
+
   return Config;
 };
