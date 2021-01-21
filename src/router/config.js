@@ -1,19 +1,31 @@
 const router = require('express').Router();
-const Controller = require('../controller/configController');
-const { configChecker } = require('../middleware/bodyChecker');
-const { auth, role } = require('../middleware/auth');
-const config = new Controller();
+const {check} = require('../middleware/validator');
+const {isConnected} = require('../middleware/auth');
+const Config = require('../models/').Config
 
-router.get('/', auth, config.get);
 
-router.get('/:id', auth, config.getItemByConfig);
+router.get('/', async ({res}) => {
+  res.json(await Config.findAllUserAndItem())
+});
 
-router.post('/', auth, configChecker, config.createNewConfig);
+router.get('/:id', async (req, res) => {
+  res.json(await Config.findAllUserAndItemById(req.params.id));
+});
 
-router.post('/:configId/add/:itemId', auth, config.addItem);
+router.post('/', isConnected(), check(['name', 'description']), async (req, res) => {
+  res.json(await Config.create({...req.body, UserId: req.user.id}));
+});
 
-router.patch('/:id', auth, config.update);
+router.post('/:configId/add/:itemId', isConnected(), async (req, res, next) => {
+  try {
+    res.json(await Config.addItem(req.params.configId, req.params.itemId));
+  } catch (err) {
+    next(err)
+  }
+});
 
-router.delete('/:id', auth, config.deleteById);
+/*router.patch('/:id', auth, config.update);*/
+
+/*router.delete('/:id', auth, config.deleteById);*/
 
 module.exports = router;

@@ -1,21 +1,26 @@
 const router = require('express').Router();
-const UserController = require('../controller/userController');
-const { userBodyChecker } = require('../middleware/bodyChecker');
-const { auth, role } = require('../middleware/auth');
-const user = new UserController();
+const {role} = require('../middleware/auth');
+const {hasBody} = require('../middleware/validator');
+const User = require('../models/').User;
 
-router.get('/', role('admin'), user.get);
+router.get('/', role('admin'), async ({res}) => {
+  res.json(await User.findAll());
+});
 
-router.get('/:id(\\d+)/', role('admin'), user.getById);
+router.get('/:id(\\d+)/', role('admin'), async (req, res) => {
+  res.json(await User.find({where: {id: req.params.id}}));
+});
 
-router.post('/', userBodyChecker, user.createNewUser);
+router.patch('/me', hasBody(), async (req, res) => {
+  res.json(await User.updateMe(req.body, req.user))
+});
 
-router.patch('/me', auth, user.updateMe);
+router.delete('/me', async (req, res) => {
+  res.json(await User.deleteMe(req.user))
+});
 
-router.patch('/:id(\\d+)/', role('admin'), user.update);
-
-router.delete('/me', auth, user.deleteMe);
-
-router.delete('/:id(\\d+)/', role('admin'), user.deleteById);
+router.delete('/:id(\\d+)/', role('admin'), async (req, res) => {
+  res.json(await User.deleteById(req.params.id))
+});
 
 module.exports = router;

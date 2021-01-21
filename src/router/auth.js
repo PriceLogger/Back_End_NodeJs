@@ -1,13 +1,15 @@
+const HttpError = require("../error/httpError");
 const router = require('express').Router();
-const AuthController = require('../controller/authController');
-const {loginBody} = require('../middleware/bodyChecker');
+const {check} = require('../middleware/validator');
+const User = require('../models').User;
 
-const auth = new AuthController();
+router.post('/', check(['username', 'password']), async (req, res, next) => {
+  const user = await User.hasValidCredentials(req.body.username, req.body.password);
+  if (user) res.json({token: user.sign()})
+  else next(new HttpError("Wrong Credential", 400));
+});
+router.post('/forgot', async (req, res) => {
 
-router.post('/', loginBody, auth.login);
-
-router.post('/forgot', (req, res) => {
-  /*  mail.forgot(req, res); */
 });
 
 module.exports = router;

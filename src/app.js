@@ -3,29 +3,29 @@ const app = express();
 
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const {isConnected, tokenParser, role} = require('./middleware/auth');
 
-const auth = require('./router/auth')
-const user = require('./router/user');
-const provider = require('./router/provider');
-const item = require('./router/item');
-const config = require('./router/config');
+const HttpError = require("./error/httpError");
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(tokenParser());
+app.use
 
-app.use('/auth', auth);
-app.use('/user', user);
-app.use('/item', item);
-app.use('/provider', provider);
-app.use('/config', config);
+const router = (router) => {
+  return require('./router/' + router)
+};
 
-app.all('/*', (req, res) => {
-    res.status(404).json({
-        err: {
-            code: 404,
-            message: 'You should not be here'
-        }
-    });
+app.use('/auth', router('auth'));
+app.use('/user', isConnected(), router('user'));
+app.use('/item', router('item'));
+app.use('/provider', isConnected(), role("Admin"), router('provider'));
+app.use('/config', router('config'));
+
+app.all('/*', () => {
+  throw new HttpError('Invalid Url', 404);
 });
+
+app.use(require('./middleWare/error')())
 
 app.listen(process.env.PORT || 3000);
