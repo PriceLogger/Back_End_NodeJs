@@ -1,21 +1,21 @@
 {
     "development": {
         "username": "PriceLogger",
-        "password": null,
+        "password": "PriceLogger",
         "database": "PriceLogger_development",
         "host": "localhost",
         "dialect": "postgres"
     },
     "test": {
         "username": "PriceLogger_test",
-        "password": null,
+        "password": "PriceLogger",
         "database": "PriceLogger_test",
         "host": "localhost",
         "dialect": "postgres"
     },
     "production": {
         "username": "PriceLogger",
-        "password": null,
+        "password": "PriceLogger",
         "database": "PriceLogger",
         "host": "localhost",
         "dialect": "postgres"
