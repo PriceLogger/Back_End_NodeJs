@@ -3,21 +3,21 @@
         "username": "PriceLogger",
         "password": null,
         "database": "PriceLogger_development",
-        "host": "127.0.0.1",
+        "host": "localhost",
         "dialect": "postgres"
     },
     "test": {
         "username": "PriceLogger_test",
         "password": null,
         "database": "PriceLogger_test",
-        "host": "127.0.0.1",
+        "host": "localhost",
         "dialect": "postgres"
     },
     "production": {
         "username": "PriceLogger",
         "password": null,
         "database": "PriceLogger",
-        "host": "127.0.0.1",
+        "host": "localhost",
         "dialect": "postgres"
     }
 }
