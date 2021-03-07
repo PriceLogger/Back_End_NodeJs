@@ -1,4 +1,4 @@
-const HttpError = require("../error/httpError");
+const { MissingBody, MissingFieldInBody, MissingArrayInBody } = require("../error/httpError");
 
 const check = (field) => {
     return (req, res, next) => {
@@ -14,7 +14,7 @@ const check = (field) => {
         if (correct) {
             next();
         } else {
-            next(new HttpError('Some required fields are not filled in', 400, { missing: missing }))
+            next(new MissingFieldInBody(missing))
         }
     }
 }
@@ -22,11 +22,16 @@ const check = (field) => {
 const hasBody = () => {
     return (req, res, next) => {
         if (Object.keys(req.body).length === 0) {
-            next(new HttpError('No information given', 400))
+            next(new MissingBody())
         } else {
             next();
         }
     }
+}
+
+const checkArray = () => {
+    if (!Array.isArray(prices)) next(new MissingArrayInBody());
+    else next();
 }
 
 const login = ['username', 'password'];

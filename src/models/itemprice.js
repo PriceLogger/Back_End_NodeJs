@@ -1,5 +1,5 @@
 const { Model } = require('sequelize');
-const HttpError = require('../error/httpError');
+const { MissingArrayInBody, MissingFieldInBody } = require('../error/httpError');
 
 module.exports = (sequelize, DataTypes) => {
     class ItemPrice extends Model {
@@ -27,9 +27,10 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     ItemPrice.ingest = async function(prices) {
-        if (!Array.isArray(prices)) throw new HttpError('Invalid itemPrice', 404, { reason: 'not a array' })
+        if (!Array.isArray(prices)) throw new MissingArrayInBody('Prices');
         prices.forEach(price => {
-            if (!price.ItemId || !price.price) throw new HttpError('Invalid itemPrice', 404, { reason: 'missing price or itemId on one of the value' })
+            if (!price.ItemId) throw new MissingFieldInBody('ItemId');
+            else if (!price.price) throw new MissingFieldInBody('price');
         });
         return await ItemPrice.bulkCreate(prices);
     }
