@@ -26,6 +26,8 @@ const isConnected = () => {
 const role = (role) => {
     return (req, res, next) => {
         if (!req.user) next(new AuthError());
+
+        else if (Array.isArray(role) && role.find((role) => req.user.role.toLowerCase() === role.toLowerCase())) next();
         else if (req.user.role.toLowerCase() === 'admin' || req.user.role.toLowerCase() === role.toLowerCase()) next();
         else next(new PrivilegeError());
     }

@@ -19,7 +19,7 @@ const router = (router) => {
 app.use('/auth', router('auth'));
 app.use('/user', isConnected(), router('user'));
 app.use('/item', router('item'));
-app.use('/provider', isConnected(), role("Admin"), router('provider'));
+app.use('/provider', isConnected(), role(["Admin", "Worker"]), router('provider'));
 app.use('/config', router('config'));
 
 app.all('/*', () => {

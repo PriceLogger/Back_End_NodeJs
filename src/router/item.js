@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Item = require('../models/').Item;
 const ItemPrice = require('../models/').ItemPrice;
 const { check, hasBody } = require('../middleware/validator');
+const { role } = require('../middleware/auth');
 
 router.get('/', async({ res }) => {
     res.json(await Item.findAll({ include: ItemPrice }));
@@ -19,7 +20,7 @@ router.post('/', check(['url']), async(req, res, next) => {
     }
 });
 
-router.post('/price', hasBody(), async(req, res, next) => {
+router.post('/price', hasBody(), role('worker'), async(req, res, next) => {
     try {
         res.json(await ItemPrice.ingest(req.body));
     } catch (err) {
