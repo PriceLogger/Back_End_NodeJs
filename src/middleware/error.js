@@ -11,9 +11,10 @@ error = () => {
 
             res.status(err.htmlCode).json({
                 err: {
+                    type: err.constructor.name,
                     code: err.htmlCode,
                     message: err.message,
-                    ...err.data
+                    ...err.data,
                 }
             });
         } else {
