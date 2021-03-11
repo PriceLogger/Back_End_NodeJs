@@ -28,6 +28,6 @@ app.all('/*', () => {
 });
 
 //error route
-app.use(require('./middleWare/error')())
+app.use(require('./middleware/error')())
 
 app.listen(process.env.PORT || 3000);
