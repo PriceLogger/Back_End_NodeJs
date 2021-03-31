@@ -12,7 +12,7 @@ app.use(tokenParser());
 
 //require router
 const router = (router) => {
-    return require('./router/' + router)
+  return require('./router/' + router)
 };
 
 //route
@@ -20,11 +20,11 @@ app.use('/auth', router('auth'));
 app.use('/user', isConnected(), router('user'));
 app.use('/item', router('item'));
 app.use('/provider', isConnected(), role(["Admin", "Worker"]), router('provider'));
-app.use('/config', router('config'));
+app.use('/list', router('list'));
 
 //default route 
 app.all('/*', () => {
-    throw new InvalidUrl();
+  throw new InvalidUrl();
 });
 
 //error route
