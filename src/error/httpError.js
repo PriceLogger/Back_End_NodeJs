@@ -23,6 +23,13 @@ class InvalidUrl extends HttpError {
   }
 }
 
+class IdIsNotInt extends HttpError {
+  constructor() {
+    super('Id should be a int, not a string');
+    this.htmlCode = 400;
+  }
+}
+
 class CredentialError extends HttpError {
   constructor() {
     super('Wrong Credential');
@@ -74,4 +81,4 @@ class MissingFieldInBody extends MalFormatedBody {
   }
 }
 
-module.exports = { HttpError, InvalidUrl, CredentialError, PrivilegeError, AuthError, MissingBody, MissingFieldInBody, MissingArrayInBody };
+module.exports = { HttpError, InvalidUrl, CredentialError, PrivilegeError, AuthError, MissingBody, MissingFieldInBody, MissingArrayInBody, IdIsNotInt };
