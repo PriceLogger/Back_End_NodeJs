@@ -15,6 +15,10 @@ router.get('/:id(\\d+)/', async(req, res, next) => {
   res.json(await Item.findByPk(req.params.id, { include: ItemPrice }).catch(next));
 });
 
+router.get('/search/:name', async(req, res, next) => {
+  res.json(await Item.findByString(req.params.name).catch(next));
+})
+
 router.post('/', check(['url']), async(req, res, next) => {
   res.json(await Item.new(req.body.url).catch(next))
 });
