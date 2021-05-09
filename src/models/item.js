@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
         }
       });
     }
-
   };
 
   Item.init({

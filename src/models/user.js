@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../../config/jwt.json');
 const { CredentialError } = require('../error/httpError');
+const SALT = 11
 
 const User = (sequelize, DataTypes) => {
   class User extends Model {
@@ -20,6 +21,14 @@ const User = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     role: DataTypes.STRING,
   }, { sequelize, modelName: 'User', });
+
+  User.new = async function(user = { username, password, email, role }) {
+    user.password = await bcrypt.hashSync(user.password, SALT);
+    user.role = "user";
+    console.log(user)
+    await User.build(user).save();
+    return user;
+  }
 
   User.hasValidCredentials = async function(username, password) {
     //no data
